@@ -21,7 +21,7 @@ app.use(shopRoutes);
 
 //404 Error Pages
 app.use((req, res, next) => {
-    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
+    res.status(404).render('404');
 });
 
 //Register Server with port
