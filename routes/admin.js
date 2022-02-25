@@ -16,13 +16,13 @@ router.get('/add-product', (req, res, next) => {
     formsCSS: true,
     productCSS: true,
     activeAddProduct: true,
-  })
+  });
 })
 
 // /admin/add-product => POST
 router.post('/add-product', (req, res, next) => {
-  products.push({ title: req.body.title })
-  res.redirect('/')
+  products.push({ title: req.body.title });
+  res.redirect('/');
 })
 
 exports.routes = router
