@@ -1,32 +1,33 @@
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const path = require('path');
-const app = express();
 const expressHbs = require('express-handlebars');
+
+const app = express();
+
+app.engine(
+  'hbs',
+  expressHbs({
+    layoutsDir: 'views/layouts/',
+    defaultLayout: 'main-layout',
+    extname: 'hbs'
+  })
+);
+app.set('view engine', 'hbs');
+app.set('views', 'views');
+
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-//Init HandleBars
-app.engine('handlebars', expressHbs());
-
-//Set global name-value
-app.set('view engine', 'pug');
-app.set('views', 'views'); //Where to find the templates
-//Serve static files "public" with static middleware to enable access of css files
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-//Register middleware for body-parser
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
 
-//Router
 app.use('/admin', adminData.routes);
 app.use(shopRoutes);
 
-//404 Error Pages
 app.use((req, res, next) => {
-    res.status(404).render('404', {pageTitle: 'Page Not Found!'});
+  res.status(404).render('404', { pageTitle: 'Page Not Found' });
 });
 
-//Register Server with port
 app.listen(3000);
