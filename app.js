@@ -2,18 +2,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+const expressHbs = require('express-handlebars');
 const adminData = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 
-//Register middleware for body-parser
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+//Init HandleBars
+app.engine('handlebars', expressHbs());
+
 //Set global name-value
 app.set('view engine', 'pug');
 app.set('views', 'views'); //Where to find the templates
 //Serve static files "public" with static middleware to enable access of css files
 app.use(express.static(path.join(__dirname, 'public')));
+//Register middleware for body-parser
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 //Router
 app.use('/admin', adminData.routes);

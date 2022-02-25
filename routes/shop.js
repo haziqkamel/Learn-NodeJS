@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
 
     const products = adminData.products;
     ///Use default templating engine
-    res.render('shop', {prods: products, pageTitle: 'Shop', path: '/'});
+    res.render('shop', {prods: products, pageTitle: 'Shop', path: '/', hasProducts: products.length > 0});
 });
 
 module.exports = router;
